@@ -1,0 +1,116 @@
+/* Overall users list container */
+.users-list {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Error message styling */
+.alert {
+  color: red;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* Loading indicator */
+.loading-indicator {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #007bff;
+  margin-top: 20px;
+}
+
+/* User table (container for user cards) */
+.user-table {
+  display: flex;
+  flex-direction: column;  /* Ensure the user cards stack vertically */
+  gap: 20px;  /* Space between each user card */
+}
+
+/* Individual user card */
+.user-card {
+  display: flex;
+  flex-direction: column; /* Stack the content vertically */
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* User avatar styling */
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+/* User information section */
+.user-info {
+  margin-bottom: 20px; /* Space between user details and actions */
+}
+
+.user-info p {
+  font-size: 1rem;
+  color: #333;
+  margin: 5px 0;
+}
+
+/* User actions (buttons) */
+.user-actions {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  justify-content: flex-start;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+button:focus {
+  outline: none;
+  border: 2px solid #0056b3;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .user-table {
+    gap: 15px;
+  }
+
+  .user-card {
+    padding: 10px;
+  }
+
+  .user-avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
