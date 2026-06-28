@@ -1,22 +1,47 @@
-// src/App.js
+import React from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Login from './components/Login';
-import UsersList from './components/UsersList';
-import EditUser from './components/EditUser';
+import Login from "./components/Login";
+import UsersList from "./components/UsersList";
+import EditUser from "./components/EditUser";
+
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+
+  return token ? children : <Navigate to="/login" />;
+};
 
 function App() {
-
   return (
-    <Router>
-    <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/users" element={<UsersList />} />
-          <Route path="/edit/:id" element={<EditUser />} />
-          <Route path="/" element={<Login />} />
-        </Routes>
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <UsersList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit/:id"
+          element={
+            <ProtectedRoute>
+              <EditUser />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

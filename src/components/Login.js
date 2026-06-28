@@ -1,64 +1,63 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './Login.css'; 
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../api";
+import "./Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('eve.holt@reqres.in');
-  const [password, setPassword] = useState('cityslicka');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("eve.holt@reqres.in");
+  const [password, setPassword] = useState("eve@holt");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
 
     try {
-      const response = await axios.post('https://reqres.in/api/login', {
+      const response = await api.post("/login", {
         email,
-        password
+        password,
       });
 
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        navigate('/users');
-      } else {
-        setError('Login failed. Please try again.');
-      }
+      localStorage.setItem("token", response.data.token);
+      navigate("/users");
     } catch (err) {
-      if (err.response && err.response.data) {
-        setError(err.response.data.error || 'Something went wrong. Please try again.');
-      } else {
-        setError('Network error. Please check your internet connection.');
-      }
-    } finally {
-      setLoading(false);
+      console.log(err.response);
+
+      setError(
+        err.response?.data?.error || "Login failed. Please try again."
+      );
     }
+
+    setLoading(false);
   };
 
   return (
     <div className="login-container">
       <h2>Login</h2>
-      {error && <div className="alert">{error}</div>}
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <form onSubmit={handleLogin}>
         <input
           type="email"
-          placeholder="Email"
           value={email}
+          placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
+
         <input
           type="password"
-          placeholder="Password"
           value={password}
+          placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
+
         <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>

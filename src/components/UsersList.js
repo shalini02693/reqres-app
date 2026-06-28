@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import './UsersList.css';
 
@@ -23,7 +23,7 @@ const UsersList = () => {
     setError(''); 
 
     try {
-      const response = await axios.get(`https://reqres.in/api/users?page=${page}`);
+      const response = await api.get(`/users?page=${page}`);
       setUsers(response.data.data);
       setTotalPages(response.data.total_pages);
     } catch (error) {
@@ -45,7 +45,8 @@ const UsersList = () => {
     }
 
     try {
-      await axios.delete(`https://reqres.in/api/users/${userId}`);
+      await api.delete(`/users/${userId}`);
+      setUsers(users.filter((user) => user.id !== userId));
       fetchUsers(); 
     } catch (error) {
       console.error('Error deleting user', error);

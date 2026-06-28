@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate, useParams } from 'react-router-dom';
 import './EditUser.css'; 
 
@@ -15,12 +15,12 @@ const EditUser = () => {
   const fetchUser = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
-      navigate.push('/login');
+      navigate('/login');
       return;
     }
 
     try {
-      const response = await axios.get(`https://reqres.in/api/users/${id}`);
+      const response = await api.get(`/users/${id}`);
       setUser(response.data.data);
     } catch (error) {
       console.error('Error fetching user', error);
@@ -34,7 +34,7 @@ const EditUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`https://reqres.in/api/users/${id}`, user);
+      await api.put(`/users/${id}`, user);
       alert('Save successfully!');
       navigate('/users');
     } catch (error) {
