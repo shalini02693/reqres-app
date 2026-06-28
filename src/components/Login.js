@@ -5,7 +5,7 @@ import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("eve.holt@reqres.in");
-  const [password, setPassword] = useState("eve@holt");
+  const [password, setPassword] = useState("cityslicka");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -27,9 +27,7 @@ const Login = () => {
     } catch (err) {
       console.log(err.response);
 
-      setError(
-        err.response?.data?.error || "Login failed. Please try again."
-      );
+      setError(err.response?.data?.error || "Login failed. Please try again.");
     }
 
     setLoading(false);

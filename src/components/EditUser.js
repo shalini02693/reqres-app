@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import api from '../api';
-import { useNavigate, useParams } from 'react-router-dom';
-import './EditUser.css'; 
+import React, { useState, useEffect, useCallback } from "react";
+import api from "../api";
+import { useNavigate, useParams } from "react-router-dom";
+import "./EditUser.css";
 
 const EditUser = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState({
-    first_name: '',
-    last_name: '',
-    email: ''
+    first_name: "",
+    last_name: "",
+    email: "",
   });
 
-  const fetchUser = async () => {
-    const token = localStorage.getItem('token');
+  const fetchUser = useCallback(async () => {
+    const token = localStorage.getItem("token");
+
     if (!token) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
 
@@ -23,22 +24,22 @@ const EditUser = () => {
       const response = await api.get(`/users/${id}`);
       setUser(response.data.data);
     } catch (error) {
-      console.error('Error fetching user', error);
+      console.error(error);
     }
-  };
+  }, [id, navigate]);
 
   useEffect(() => {
     fetchUser();
-  }, [id]);
+  }, [fetchUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await api.put(`/users/${id}`, user);
-      alert('Save successfully!');
-      navigate('/users');
+      alert("Save successfully!");
+      navigate("/users");
     } catch (error) {
-      console.error('Error updating user', error);
+      console.error("Error updating user", error);
     }
   };
 
